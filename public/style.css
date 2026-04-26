@@ -706,3 +706,46 @@ footer {
   align-items: center;
   z-index: 9999;
 }
+
+.hero-content {
+  padding: 0 15px;
+}
+
+.hero-content h1 {
+  font-size: 32px;
+  line-height: 1.2;
+  word-wrap: break-word;
+}
+
+.hero-content p {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.search-box {
+  flex-wrap: wrap;
+}
+
+.search-box input {
+  width: 100%;
+  max-width: 250px;
+}
+
+.search-box button {
+  width: auto;
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: auto;
+    padding: 40px 10px;
+  }
+
+  .hero-content h1 {
+    font-size: 28px;
+  }
+
+  .hero-content p {
+    font-size: 13px;
+  }
+}
