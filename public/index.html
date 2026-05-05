@@ -1,168 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zenvora Kitchen – Fresh Food, Fast Delivery</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zenvora Kitchen – Fresh Food, Fast Delivery</title>
 
-<!-- Open Graph Meta Tags -->
-<meta property="og:title" content="Zenvora Kitchen – Order Food Online" />
-<meta property="og:description" content="Delicious food ordering website with fast delivery, cart system, and easy checkout." />
-<meta property="og:image" content="https://zenvora-kitchen.vercel.app/logo.jpg" />
-<meta property="og:url" content="https://zenvora-kitchen.vercel.app" />
-<meta property="og:type" content="website" />
+  <meta property="og:title" content="Zenvora Kitchen – Order Food Online" />
+  <meta property="og:description" content="Delicious food ordering website with fast delivery, cart system, and easy checkout." />
+  <meta property="og:image" content="https://zenvora-kitchen.vercel.app/logo.jpg" />
+  <meta property="og:url" content="https://zenvora-kitchen.vercel.app" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-<!-- WhatsApp Preview -->
-<meta name="twitter:card" content="summary_large_image" />
-<link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
-<div id="loader">Loading...</div>
+
 <body>
+  <div id="loader">Loading...</div>
 
-<header>
-  <div class="logo-box">
-    <img src="logo.jpg">
-    <div>
-      <h2>Zenvora Kitchen</h2>
-      <p class="tagline">Where Taste Meets <span>Speed</span></p>
+  <header>
+    <div class="logo-box">
+      <img src="logo.jpg" alt="Zenvora Kitchen Logo" />
+      <div>
+        <h2>Zenvora Kitchen</h2>
+        <p class="tagline">Where Taste Meets <span>Speed</span></p>
+      </div>
+    </div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+    <nav id="navMenu">
+      <div class="close-btn" onclick="toggleMenu()">✖</div>
+      <a href="#home">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#order">Order</a>
+      <a href="#cart">Cart <span id="cartCount">0</span></a>
+      <a href="#checkout">Checkout</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1>Delicious Food Delivered Fast 🍕</h1>
+      <p>Fresh, hot & hygienic meals delivered to your doorstep in 30–40 minutes</p>
+
+      <div class="hero-cta">
+        <a href="https://wa.me/919347479356" target="_blank" class="btn primary-btn">
+          Order on WhatsApp
+        </a>
+        <a href="#menu" class="btn secondary-btn">
+          View Menu
+        </a>
+      </div>
+
+      <div class="hero-features">
+        <span>🚚 Fast Delivery</span>
+        <span>⭐ 4.8 Rating</span>
+        <span>👨‍🍳 Fresh Ingredients</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="trust-section">
+    <div>🚚 30-40 Min Delivery</div>
+    <div>⭐ 4.8 Customer Rating</div>
+    <div>👨‍👩‍👧‍👦 1000+ Happy Customers</div>
+    <div>🥗 Fresh Ingredients</div>
+  </section>
+
+  <!-- OFFER -->
+  <section class="offer-section">
+    <h2>🔥 20% OFF on Your First Order</h2>
+    <p>Use Code: <strong>ZEN20</strong></p>
+    <a href="#menu" class="btn">Order Now</a>
+  </section>
+
+  <!-- POPULAR -->
+  <section>
+    <h2 class="section-title">Popular Items 🔥</h2>
+    <div id="popularItems" class="food-grid"></div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu">
+    <h2 class="section-title">Categories</h2>
+    <div class="categories">
+      <button onclick="filterCategory('All', event)">🍽️ All</button>
+      <button onclick="filterCategory('Starters', event)">🥗 Starters</button>
+      <button onclick="filterCategory('Biryani', event)">🍛 Biryani</button>
+      <button onclick="filterCategory('Meals', event)">🍱 Meals</button>
+      <button onclick="filterCategory('Pizza', event)">🍕 Pizza</button>
+      <button onclick="filterCategory('Burgers', event)">🍔 Burgers</button>
+      <button onclick="filterCategory('Desserts', event)">🍰 Desserts</button>
+      <button onclick="filterCategory('Drinks', event)">🥤 Drinks</button>
+    </div>
+  </section>
+
+  <!-- ORDER -->
+  <section id="order">
+    <h2 class="section-title">Order Food</h2>
+    <div id="foodList" class="food-grid"></div>
+  </section>
+
+  <!-- CART -->
+  <section id="cart">
+    <h2 class="section-title">Your Cart</h2>
+    <div id="cartItems"></div>
+    <h3>Total: ₹<span id="total">0</span></h3>
+    <p style="text-align:center;">🚚 Delivery in 30-40 mins</p>
+    <button onclick="sendToWhatsApp()" class="whatsapp-order-btn">
+      Order Entire Cart on WhatsApp
+    </button>
+  </section>
+
+  <!-- CHECKOUT -->
+  <section id="checkout">
+    <h2 class="section-title">Checkout</h2>
+
+    <form id="checkoutForm">
+
+      <input type="text" id="name" placeholder="Name" required>
+
+      <input type="tel" id="phone" placeholder="Phone" required 
+             pattern="[0-9]{10}" title="Enter 10 digit phone number">
+
+      <textarea id="address" placeholder="Address" required></textarea>
+
+      <select id="payment" onchange="togglePaymentFields()" required>
+        <option value="">Select Payment</option>
+        <option value="COD">COD</option>
+        <option value="UPI">UPI</option>
+        <option value="Card">Card</option>
+      </select>
+
+      <div id="upiBox" class="payment-box">
+        <input id="upiInput" placeholder="Enter UPI ID">
+      </div>
+
+      <div id="cardBox" class="payment-box">
+        <input id="upiInput" placeholder="Enter UPI ID">
+        <input id="cardNumber" placeholder="Card Number">
+        <input id="expiry" placeholder="Expiry (MM/YY)">
+        <input id="cvv" placeholder="CVV">
+      </div>
+
+      <button type="submit">Place Order</button>
+
+    </form>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h2 class="section-title">About Zenvora Kitchen</h2>
+    <div class="about-text">
+      <p>
+        Zenvora Kitchen serves fresh, tasty and hygienic food prepared with love.
+        We help customers order food easily with fast delivery and simple online ordering.
+      </p>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews">
+    <h2 class="section-title">Customer Reviews</h2>
+
+    <div class="review-grid">
+      <div class="review-card">
+        <p>⭐️⭐️⭐️⭐️⭐️</p>
+        <h3>Best biryani in town!</h3>
+        <p>Food was fresh, hot and delivered quickly.</p>
+        <strong>- Rahul</strong>
+      </div>
+
+      <div class="review-card">
+        <p>⭐️⭐️⭐️⭐️⭐️</p>
+        <h3>Amazing taste</h3>
+        <p>Easy ordering and very good quality food.</p>
+        <strong>- Priya</strong>
+      </div>
+
+      <div class="review-card">
+        <p>⭐️⭐️⭐️⭐️⭐️</p>
+        <h3>Fast delivery</h3>
+        <p>Received my order on time. Great experience.</p>
+        <strong>- Anil</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2 class="section-title">Contact</h2>
+
+    <div class="contact-box">
+      <p>📞 9347479356</p>
+      <p>📍 Karimnagar</p>
+    </div>
+
+    <div style="text-align:center;">
+      <a class="whatsapp-btn" href="https://wa.me/919347479356" target="_blank">
+        Order on WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- POPUP -->
+  <div id="popup" class="popup">
+    <div class="popup-box">
+      <h2>🎉 Order Placed</h2>
+      <p>Food is on the way!</p>
+      <button onclick="closePopup()">OK</button>
     </div>
   </div>
 
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <footer>
+    <p>© 2026 Zenvora Kitchen. All Rights Reserved.</p>
+    <p class="credit">
+      Designed by
+      <a href="https://instagram.com/pixel_craftstudio_01" target="_blank">
+        PixelCraftStudio
+      </a>
+    </p>
 
-  <nav id="navMenu">
-    <div class="close-btn" onclick="toggleMenu()">✖</div>
-
-    <a href="#home">Home</a>
-    <a href="#menu">Menu</a>
-    <a href="#order">Order</a>
-    <a href="#cart">Cart <span id="cartCount">0</span></a>
-    <a href="#checkout">Checkout</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
-
-<!-- HERO -->
-<section id="home" class="hero">
-  <div class="hero-content">
-    <h1>Order Food Online</h1>
-    <p>Freshly prepared meals, delivered to your doorstep</p>
-
-    <div class="search-box">
-      <input type="text" placeholder="Search food...">
-      <button onclick="searchFood()">Search</button>
+    <div class="social-icons">
+      <a href="#"><span>📷</span></a>
+      <a href="#"><span>👍</span></a>
+      <a href="#"><span>🐦</span></a>
     </div>
-  </div>
-</section>
+  </footer>
 
+  <a href="https://wa.me/919347479356" target="_blank" class="whatsapp-float">💬</a>
 
-<!-- POPULAR -->
-<section>
-  <h2 class="section-title">Popular Items 🔥</h2>
-  <div id="popularItems" class="food-grid"></div>
-</section>
+  <script src="script.js"></script>
 
-<!-- MENU -->
-<section id="menu">
-  <h2 class="section-title">Categories</h2>
-  <div class="categories">
-  <button onclick="filterCategory('All', event)">🍽️ All</button>
-  <button onclick="filterCategory('Starters', event)">🥗 Starters</button>
-  <button onclick="filterCategory('Biryani', event)">🍛 Biryani</button>
-  <button onclick="filterCategory('Meals', event)">🍱 Meals</button>
-  <button onclick="filterCategory('Pizza', event)">🍕 Pizza</button>
-  <button onclick="filterCategory('Burgers', event)">🍔 Burgers</button>
-  <button onclick="filterCategory('Desserts', event)">🍰 Desserts</button>
-  <button onclick="filterCategory('Drinks', event)">🥤 Drinks</button>
-</div>
-</section>
-
-<!-- ORDER -->
-<section id="order">
-  <h2 class="section-title">Order Food</h2>
-  <div id="foodList" class="food-grid"></div>
-</section>
-
-<!-- CART -->
-<section id="cart">
-  <h2 class="section-title">Your Cart</h2>
-  <div id="cartItems"></div>
-  <h3>Total: ₹<span id="total">0</span></h3>
-  <p style="text-align:center;">🚚 Delivery in 30-40 mins</p>
-</section>
-
-<!-- CHECKOUT -->
-<section id="checkout">
-  <h2 class="section-title">Checkout</h2>
-
-  <form id="checkoutForm">
-    <input type="text" id="name" placeholder="Name" required>
-    <input type="tel" id="phone" placeholder="Phone" required>
-    <textarea id="address" placeholder="Address" required></textarea>
-
-    <select id="payment" onchange="togglePaymentFields()" required>
-      <option value="">Select Payment</option>
-      <option value="COD">COD</option>
-      <option value="UPI">UPI</option>
-      <option value="Card">Card</option>
-    </select>
-
-    <div id="upiBox" class="payment-box">
-      <input placeholder="Enter UPI ID">
-    </div>
-
-    <div id="cardBox" class="payment-box">
-      <input placeholder="Card Number">
-      <input placeholder="Expiry">
-      <input placeholder="CVV">
-    </div>
-
-    <button>Place Order</button>
-  </form>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <h2 class="section-title">Contact</h2>
-  <div class="contact-box">
-    <p>📞 9347479356</p>
-    <p>📍 Karimnagar</p>
-  </div>
-
-  <div style="text-align:center;">
-    <a class="whatsapp-btn" href="https://wa.me/919347479356">Order on WhatsApp</a>
-  </div>
-</section>
-
-<!-- POPUP -->
-<div id="popup" class="popup">
-  <div class="popup-box">
-    <h2>🎉 Order Placed</h2>
-    <p>Food is on the way!</p>
-    <button onclick="closePopup()">OK</button>
-  </div>
-</div>
-
-<footer>
-  <p>© 2026 Zenvora Kitchen. All Rights Reserved.</p>
-  <p class="credit">
-    Designed by 
-    <a href="https://instagram.com/pixel_craftstudio_01" target="_blank">
-      PixelCraftStudio
-    </a>
-  </p>
-
-  <div class="social-icons">
-    <a href="#"><span>📷</span></a>
-    <a href="#"><span>👍</span></a>
-    <a href="#"><span>🐦</span></a>
-  </div>
-</footer>
-
-<script src="script.js"></script>
-
-<a href="https://wa.me/919347479356" class="whatsapp-float">💬</a>
-
+  <div id="toast" class="toast">Item added to cart 🛒</div>
 </body>
 </html>

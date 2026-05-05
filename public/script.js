@@ -1,17 +1,20 @@
 let cart = [];
 let menuItems = [];
 
-// LOAD MENU
 async function loadMenu() {
+  document.getElementById("loader").style.display = "flex"; // show loader
+
   const res = await fetch("/api/menu");
   menuItems = await res.json();
+
   displayMenu(menuItems);
   loadPopular();
   displayCart();
   updateCartCount();
+
+  document.getElementById("loader").style.display = "none"; // hide loader
 }
 
-// DISPLAY MENU
 function displayMenu(items) {
   const foodList = document.getElementById("foodList");
 
@@ -24,25 +27,39 @@ function displayMenu(items) {
     ).join("");
 
     return `
-      <div class="food-card">
+      <div class="food-card premium-card">
         <div class="food-img-box">
           <img src="${item.image}" alt="${item.name}">
-          <span class="rating-badge">⭐ 4.5</span>
-          <button class="hover-add-btn" onclick="addToCart(${item.id})">Add +</button>
+          <span class="rating-badge">⭐ 4.8</span>
+          <span class="best-badge">🔥 Best Seller</span>
         </div>
 
         <div class="food-info">
           <h3>${item.name}</h3>
-          <select id="size-${item.id}">${sizeOptions}</select>
+
+          <div class="food-meta">
+            <span>🚚 30-40 mins</span>
+            <span>🔥 Fresh</span>
+          </div>
+
+          <h4 class="food-price">From ₹${firstPrice}</h4>
+
+          <select id="size-${item.id}">
+            ${sizeOptions}
+          </select>
+
           <input type="number" id="qty-${item.id}" value="1" min="1">
-          <button onclick="addToCart(${item.id})">Add to Cart</button>
+
+          <div class="card-buttons">
+            <button onclick="addToCart(${item.id})">Add to Cart</button>
+            <a href="https://wa.me/919347479356" target="_blank" class="order-btn">Order Now</a>
+          </div>
         </div>
       </div>
     `;
   }).join("");
 }
 
-// CATEGORY FILTER
 function filterCategory(cat, event) {
   document.querySelectorAll(".categories button").forEach(btn => {
     btn.classList.remove("active");
@@ -80,9 +97,11 @@ function createRipple(event) {
   button.appendChild(circle);
 }
 
-// SEARCH FOOD
 function searchFood() {
-  const q = document.querySelector(".search-box input").value.toLowerCase();
+  const searchInput = document.querySelector(".search-box input");
+  if (!searchInput) return;
+
+  const q = searchInput.value.toLowerCase();
 
   const filtered = menuItems.filter(item =>
     item.name.toLowerCase().includes(q) ||
@@ -93,11 +112,11 @@ function searchFood() {
   document.getElementById("order").scrollIntoView({ behavior: "smooth" });
 }
 
-// ADD TO CART
 function addToCart(id) {
   const item = menuItems.find(food => food.id === id);
-  const prices = item.prices || { Regular: item.price };
+  if (!item) return;
 
+  const prices = item.prices || { Regular: item.price };
   const sizeElement = document.getElementById(`size-${id}`);
   const qtyElement = document.getElementById(`qty-${id}`);
 
@@ -123,19 +142,21 @@ function addToCart(id) {
 
   displayCart();
   updateCartCount();
+  showToast(`${item.name} added to cart 🛒`);
 }
 
-// DISPLAY CART
 function displayCart() {
   const cartItems = document.getElementById("cartItems");
   const totalBox = document.getElementById("total");
 
   cartItems.innerHTML = "";
-
   let total = 0;
 
   if (cart.length === 0) {
-    cartItems.innerHTML = `<p class="empty-cart">Your cart is empty 🛒</p>`;
+    cartItems.innerHTML = `
+  <p class="empty-cart">Your cart is empty 🛒</p>
+  <a href="#menu" class="btn">Browse Menu</a>
+`;
     totalBox.textContent = "0";
     return;
   }
@@ -166,7 +187,6 @@ function displayCart() {
   totalBox.textContent = total;
 }
 
-// CART CONTROLS
 function increaseQty(index) {
   cart[index].quantity++;
   displayCart();
@@ -190,7 +210,6 @@ function removeItem(index) {
   updateCartCount();
 }
 
-// CART COUNT
 function updateCartCount() {
   const count = cart.reduce((sum, item) => sum + item.quantity, 0);
   const cartCount = document.getElementById("cartCount");
@@ -200,10 +219,8 @@ function updateCartCount() {
   }
 }
 
-// POPULAR ITEMS
 function loadPopular() {
   const box = document.getElementById("popularItems");
-
   if (!box) return;
 
   box.innerHTML = menuItems.slice(0, 4).map(item => {
@@ -211,23 +228,30 @@ function loadPopular() {
     const firstPrice = Object.values(prices)[0];
 
     return `
-      <div class="food-card">
+      <div class="food-card premium-card">
         <div class="food-img-box">
           <img src="${item.image}" alt="${item.name}">
-          <span class="rating-badge">⭐ 4.5</span>
-          <button class="hover-add-btn" onclick="addToCart(${item.id})">Add +</button>
+          <span class="rating-badge">⭐ 4.8</span>
+          <span class="best-badge">Popular</span>
         </div>
 
         <div class="food-info">
           <h3>${item.name}</h3>
-          <button onclick="addToCart(${item.id})">Order Now</button>
+
+          <div class="food-meta">
+            <span>🚚 30-40 mins</span>
+            <span>🔥 Fresh</span>
+          </div>
+
+          <h4 class="food-price">From ₹${firstPrice}</h4>
+
+          <button onclick="addToCart(${item.id})">Add to Cart</button>
         </div>
       </div>
     `;
   }).join("");
 }
 
-// MOBILE MENU
 function toggleMenu() {
   document.getElementById("navMenu").classList.toggle("active");
 }
@@ -238,23 +262,35 @@ document.querySelectorAll("#navMenu a").forEach(link => {
   });
 });
 
-// PAYMENT UI
 function togglePaymentFields() {
   const payment = document.getElementById("payment").value;
+
+  const upi = document.getElementById("upiInput");
+  const cardNumber = document.getElementById("cardNumber");
+  const expiry = document.getElementById("expiry");
+  const cvv = document.getElementById("cvv");
 
   document.getElementById("upiBox").style.display = "none";
   document.getElementById("cardBox").style.display = "none";
 
+  if (upi) upi.required = false;
+  if (cardNumber) cardNumber.required = false;
+  if (expiry) expiry.required = false;
+  if (cvv) cvv.required = false;
+
   if (payment === "UPI") {
     document.getElementById("upiBox").style.display = "block";
+    if (upi) upi.required = true;
   }
 
   if (payment === "Card") {
     document.getElementById("cardBox").style.display = "block";
+    if (cardNumber) cardNumber.required = true;
+    if (expiry) expiry.required = true;
+    if (cvv) cvv.required = true;
   }
 }
 
-// SUCCESS POPUP
 function showPopup() {
   document.getElementById("popup").style.display = "flex";
 }
@@ -263,20 +299,34 @@ function closePopup() {
   document.getElementById("popup").style.display = "none";
 }
 
-// CHECKOUT
 document.getElementById("checkoutForm").addEventListener("submit", async function(e) {
   e.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const payment = document.getElementById("payment").value;
 
   if (cart.length === 0) {
     alert("Please add items to cart first");
     return;
   }
 
+  if (!name || !phone || !address || !payment) {
+    alert("Please fill all required fields");
+    return;
+  }
+
+  if (!/^\d{10}$/.test(phone)) {
+    alert("Enter valid 10 digit phone number");
+    return;
+  }
+
   const orderData = {
-    customerName: document.getElementById("name").value,
-    phone: document.getElementById("phone").value,
-    address: document.getElementById("address").value,
-    payment: document.getElementById("payment").value,
+    customerName: name,
+    phone,
+    address,
+    payment,
     items: cart,
     total: document.getElementById("total").textContent
   };
@@ -290,6 +340,7 @@ document.getElementById("checkoutForm").addEventListener("submit", async functio
   });
 
   showPopup();
+  showToast("Order placed successfully 🎉");
 
   cart = [];
   displayCart();
@@ -298,24 +349,48 @@ document.getElementById("checkoutForm").addEventListener("submit", async functio
   togglePaymentFields();
 });
 
+function sendToWhatsApp() {
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  let message = "Hi, I want to order:%0A%0A";
+  let total = 0;
+
+  cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    message += `${item.quantity}x ${item.name} (${item.size}) - ₹${itemTotal}%0A`;
+  });
+
+  message += `%0ATotal: ₹${total}%0A`;
+  message += `%0A----------------------%0A`;
+  message += `Name: ______%0A`;
+  message += `Phone: ______%0A`;
+  message += `Address: ______%0A`;
+  message += `----------------------`;
+
+  const phoneNumber = "919347479356";
+  const url = `https://wa.me/${phoneNumber}?text=${message}`;
+
+  window.open(url, "_blank");
+}
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  if (!toast) return;
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2000);
+}
+
 window.onload = () => {
   document.getElementById("loader").style.display = "none";
 };
 
-function toggleMenu() {
-  document.getElementById("navMenu").classList.toggle("active");
-}
-
-document.querySelectorAll("#navMenu a").forEach(link => {
-  link.addEventListener("click", () => {
-    document.getElementById("navMenu").classList.remove("active");
-  });
-});
-
 loadMenu();
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
