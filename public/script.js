@@ -2,7 +2,8 @@ let cart = [];
 let menuItems = [];
 
 async function loadMenu() {
-  document.getElementById("loader").style.display = "flex"; // show loader
+  const loader = document.getElementById("loader");
+  if (loader) loader.style.display = "flex";
 
   const res = await fetch("/api/menu");
   menuItems = await res.json();
@@ -12,7 +13,7 @@ async function loadMenu() {
   displayCart();
   updateCartCount();
 
-  document.getElementById("loader").style.display = "none"; // hide loader
+  if (loader) loader.style.display = "none";
 }
 
 function displayMenu(items) {
@@ -70,13 +71,11 @@ function filterCategory(cat, event) {
     createRipple(event);
   }
 
-  if (cat === "All") {
-    displayMenu(menuItems);
-  } else {
-    const filtered = menuItems.filter(item => item.category === cat);
-    displayMenu(filtered);
-  }
+  const filtered = cat === "All"
+    ? menuItems
+    : menuItems.filter(item => item.category === cat);
 
+  displayMenu(filtered);
   document.getElementById("order").scrollIntoView({ behavior: "smooth" });
 }
 
@@ -143,21 +142,26 @@ function addToCart(id) {
   displayCart();
   updateCartCount();
   showToast(`${item.name} added to cart 🛒`);
+  showViewCart();
 }
 
 function displayCart() {
   const cartItems = document.getElementById("cartItems");
   const totalBox = document.getElementById("total");
+  const bar = document.getElementById("viewCartBar");
 
   cartItems.innerHTML = "";
   let total = 0;
 
   if (cart.length === 0) {
     cartItems.innerHTML = `
-  <p class="empty-cart">Your cart is empty 🛒</p>
-  <a href="#menu" class="btn">Browse Menu</a>
-`;
+      <p class="empty-cart">Your cart is empty 🛒</p>
+      <a href="#menu" class="btn">Browse Menu</a>
+    `;
+
     totalBox.textContent = "0";
+
+    if (bar) bar.style.display = "none";
     return;
   }
 
@@ -185,6 +189,11 @@ function displayCart() {
   });
 
   totalBox.textContent = total;
+
+  if (bar) {
+    bar.style.display = "flex";
+    document.getElementById("viewCartText").textContent = `View Cart (₹${total})`;
+  }
 }
 
 function increaseQty(index) {
@@ -389,8 +398,23 @@ function showToast(message) {
   }, 2000);
 }
 
+function showViewCart() {
+  const bar = document.getElementById("viewCartBar");
+  const total = document.getElementById("total").textContent;
+
+  if (bar) {
+    bar.style.display = "flex";
+    document.getElementById("viewCartText").textContent = `View Cart • ₹${total}`;
+  }
+}
+
+function scrollToCart() {
+  document.getElementById("cart").scrollIntoView({ behavior: "smooth" });
+}
+
 window.onload = () => {
-  document.getElementById("loader").style.display = "none";
+  const loader = document.getElementById("loader");
+  if (loader) loader.style.display = "none";
 };
 
 loadMenu();

@@ -912,3 +912,29 @@ footer {
   opacity: 1;
   transform: translateY(-10px);
 }
+
+.view-cart-bar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--green);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 30px;
+  display: none;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  z-index: 9999;
+}
+
+.view-cart-bar button {
+  background: white;
+  color: var(--green);
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
