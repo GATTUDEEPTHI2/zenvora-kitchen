@@ -168,7 +168,7 @@ function displayMenu(items) {
           <div class="food-meta">
           </div>
 
-          <h4 class="food-price">From ₹${firstPrice}</h4>
+          <h4 class="food-price">Starting at ₹${firstPrice}</h4>
 
           <select id="size-${item.id}">
             ${sizeOptions}
