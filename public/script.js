@@ -160,7 +160,6 @@ function displayMenu(items) {
         <div class="food-img-box">
           <img src="${item.image}" alt="${item.name}">
           <span class="rating-badge">⭐ 4.8</span>
-          <span class="best-badge">🔥 Best Seller</span>
         </div>
 
         <div class="food-info">
@@ -369,7 +368,6 @@ function loadPopular() {
         <div class="food-img-box">
           <img src="${item.image}" alt="${item.name}">
           <span class="rating-badge">⭐ 4.8</span>
-          <span class="best-badge">Popular</span>
         </div>
 
         <div class="food-info">
