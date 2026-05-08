@@ -208,8 +208,9 @@ nav a:hover {
 }
 
 /* COMMON */
+
 section {
-  padding: 70px 7%;
+  scroll-margin-top: 100px;
 }
 
 .section-title {
