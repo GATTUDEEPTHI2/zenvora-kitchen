@@ -374,7 +374,6 @@ function loadPopular() {
           <h3>${item.name}</h3>
 
           <div class="food-meta">
-            <span>🚚 30-40 mins</span>
             <span>🔥 Fresh</span>
           </div>
 
