@@ -281,7 +281,6 @@ function displayCart() {
   if (cart.length === 0) {
     cartItems.innerHTML = `
       <p class="empty-cart">Your cart is empty 🛒</p>
-      <a href="#menu" class="btn">Browse Menu</a>
     `;
 
     totalBox.textContent = "0";
