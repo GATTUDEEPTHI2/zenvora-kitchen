@@ -966,8 +966,9 @@ footer {
   max-width: 520px;
   margin: 30px auto 0;
   background: #ffffff;
-  padding: 40px 45px;
+  padding: 30px 40px;
   border-radius: 24px;
+  width: fit-content;
   box-shadow: 0 10px 30px rgba(0,0,0,0.12);
 }
 
@@ -975,7 +976,7 @@ footer {
   display: flex;
   align-items: center;
   gap: 14px;
-  font-size: 22px;
+  font-size: 20px;
   margin: 18px 0;
   color: #222;
 }
