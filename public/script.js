@@ -548,3 +548,7 @@ function loadMenu() {
 
   if (loader) loader.style.display = "none";
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadMenu();
+});
