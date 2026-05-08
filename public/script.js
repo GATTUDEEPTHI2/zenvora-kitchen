@@ -468,14 +468,6 @@ document.getElementById("checkoutForm").addEventListener("submit", async functio
     total: document.getElementById("total").textContent
   };
 
-  await fetch("/api/order", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(orderData)
-  });
-
   showPopup();
   showToast("Order placed successfully 🎉");
 
