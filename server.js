@@ -157,8 +157,3 @@ const server = app.listen(5000, () => {
 });
 
 setInterval(() => {}, 1000);
-
-function toggleMenu() {
-  const nav = document.getElementById("navMenu");
-  nav.classList.toggle("active");
-}
