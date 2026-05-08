@@ -166,7 +166,6 @@ function displayMenu(items) {
           <h3>${item.name}</h3>
 
           <div class="food-meta">
-            <span>🔥 Fresh</span>
           </div>
 
           <h4 class="food-price">From ₹${firstPrice}</h4>
@@ -373,7 +372,6 @@ function loadPopular() {
           <h3>${item.name}</h3>
 
           <div class="food-meta">
-            <span>🔥 Fresh</span>
           </div>
 
           <h4 class="food-price">From ₹${firstPrice}</h4>
