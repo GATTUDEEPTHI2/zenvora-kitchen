@@ -527,10 +527,15 @@ window.addEventListener("load", () => {
 
   setTimeout(() => {
     if (loader) {
-      loader.style.display = "none";
+      loader.style.opacity = "0";
+
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 500);
     }
   }, 1200);
-});
+});  
+
 
 function loadMenu() {
   const loader = document.getElementById("loader");
