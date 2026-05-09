@@ -273,7 +273,6 @@ function addToCart(id) {
 function displayCart() {
   const cartItems = document.getElementById("cartItems");
   const totalBox = document.getElementById("total");
-  const bar = document.getElementById("viewCartBar");
 
   cartItems.innerHTML = "";
   let total = 0;
@@ -313,11 +312,6 @@ function displayCart() {
   });
 
   totalBox.textContent = total;
-
-  if (bar) {
-    bar.style.display = "flex";
-    document.getElementById("viewCartText").textContent = `View Cart (₹${total})`;
-  }
 }
 
 function increaseQty(index) {
