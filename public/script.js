@@ -516,10 +516,6 @@ function showViewCart() {
   const bar = document.getElementById("viewCartBar");
   const total = document.getElementById("total").textContent;
 
-  if (bar) {
-    bar.style.display = "flex";
-    document.getElementById("viewCartText").textContent = `View Cart • ₹${total}`;
-  }
 }
 
 function scrollToCart() {
