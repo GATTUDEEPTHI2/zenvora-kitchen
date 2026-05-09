@@ -1002,3 +1002,47 @@ footer {
     font-size: 15px;
   }
 }
+
+.sticky-cart {
+  position: fixed;
+  right: 22px;
+  bottom: 95px;
+  width: 58px;
+  height: 58px;
+  background: #f6b51d;
+  color: #111;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  cursor: pointer;
+  z-index: 999;
+}
+
+.sticky-cart span {
+  background: #2f6b00;
+  color: white;
+  font-size: 13px;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -25px;
+  margin-left: -8px;
+}
+
+@media (max-width: 480px) {
+  .sticky-cart {
+    right: 18px;
+    bottom: 90px;
+    width: 54px;
+    height: 54px;
+    font-size: 22px;
+  }
+}

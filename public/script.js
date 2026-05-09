@@ -345,10 +345,21 @@ function removeItem(index) {
 
 function updateCartCount() {
   const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+
   const cartCount = document.getElementById("cartCount");
+  const stickyCartCount = document.getElementById("stickyCartCount");
+  const stickyCart = document.getElementById("stickyCart");
 
   if (cartCount) {
     cartCount.textContent = count;
+  }
+
+  if (stickyCartCount) {
+    stickyCartCount.textContent = count;
+  }
+
+  if (stickyCart) {
+    stickyCart.style.display = count > 0 ? "flex" : "none";
   }
 }
 
