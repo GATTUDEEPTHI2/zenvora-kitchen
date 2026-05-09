@@ -348,7 +348,6 @@ function updateCartCount() {
 
   const cartCount = document.getElementById("cartCount");
   const stickyCartCount = document.getElementById("stickyCartCount");
-  const stickyCart = document.getElementById("stickyCart");
 
   if (cartCount) {
     cartCount.textContent = count;
@@ -356,10 +355,7 @@ function updateCartCount() {
 
   if (stickyCartCount) {
     stickyCartCount.textContent = count;
-  }
-
-  if (stickyCart) {
-    stickyCart.style.display = count > 0 ? "flex" : "none";
+    stickyCartCount.style.display = count > 0 ? "flex" : "none";
   }
 }
 
