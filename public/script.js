@@ -522,10 +522,15 @@ function scrollToCart() {
   document.getElementById("cart").scrollIntoView({ behavior: "smooth" });
 }
 
-window.onload = () => {
+window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
-  if (loader) loader.style.display = "none";
-};
+
+  setTimeout(() => {
+    if (loader) {
+      loader.style.display = "none";
+    }
+  }, 1200);
+});
 
 function loadMenu() {
   const loader = document.getElementById("loader");

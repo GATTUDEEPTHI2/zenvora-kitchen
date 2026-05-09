@@ -1047,3 +1047,50 @@ footer {
     font-size: 24px;
   }
 }
+
+#loader {
+  position: fixed;
+  inset: 0;
+  background: #fff8ec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+.loader-content {
+  text-align: center;
+  animation: fadeIn 0.8s ease;
+}
+
+.loader-content img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 50%;
+  margin-bottom: 18px;
+  box-shadow: 0 0 25px rgba(47, 107, 0, 0.25);
+}
+
+.loader-content h1 {
+  color: #2f6b00;
+  font-size: 38px;
+  margin-bottom: 10px;
+}
+
+.loader-content p {
+  color: #f6b51d;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
